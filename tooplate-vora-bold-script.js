@@ -9,10 +9,33 @@ const dot  = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
+// Track mouse movement on desktop
 document.addEventListener('mousemove', e => {
   mouseX = e.clientX; mouseY = e.clientY;
   dot.style.left = mouseX + 'px';
   dot.style.top  = mouseY + 'px';
+});
+
+// Track touch movement on mobile/tablet
+document.addEventListener('touchmove', e => {
+  if (e.touches.length > 0) {
+    mouseX = e.touches[0].clientX; 
+    mouseY = e.touches[0].clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top  = mouseY + 'px';
+  }
+}, { passive: true });
+
+// Show cursor on touch start
+document.addEventListener('touchstart', () => {
+  dot.style.opacity = '1';
+  ring.style.opacity = '1';
+});
+
+// Hide cursor on touch end
+document.addEventListener('touchend', () => {
+  dot.style.opacity = '0';
+  ring.style.opacity = '0';
 });
 
 (function loop() {
